@@ -73,3 +73,42 @@ String trace({required String tiles}) {
 
   return path;
 }
+
+void trace2(String tiles) {
+  final tilesNumbers = tiles.split('').map((e) => int.parse(e)).toList();
+  final koo = [
+    [const MapEntry(0, ''), const MapEntry(3, 'C'), const MapEntry(0, ''), const MapEntry(0, '')],
+    [const MapEntry(1, 'A'), const MapEntry(1, 'B'), const MapEntry(1, 'E'), const MapEntry(2, 'F')],
+    [const MapEntry(0, ''), const MapEntry(2, 'D'), const MapEntry(0, ''), const MapEntry(0, '')],
+  ];
+
+  int x = 0, y = 1;
+  int xP = 0, yP = 1;
+  MapEntry<int, String> tile = koo.elementAt(y).elementAt(x);
+  print('tile $tile (x:$x,y:$y) (xP:$xP,yP:$yP) ');
+
+  //init x
+  if (x - xP == 0 && y - yP == 0) {
+    xP = x;
+    x++;
+  }
+
+  while (x > 0 && x < 4 && y > 0 && y < 3 && !(x == xP && y == yP)) {
+    tile = koo.elementAt(y).elementAt(x);
+    print('tile $tile (x:$x,y:$y) (xP:$xP,yP:$yP) ');
+
+    int temp = x;
+    x = _moveX(tile.key, xP, x);
+    xP = temp;
+  }
+}
+
+int _moveX(pattern, xP, x) {
+  if (pattern == 1) {
+    if (x > xP) {
+      return x + 1;
+    }
+  }
+
+  return x;
+}
