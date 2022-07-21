@@ -74,7 +74,7 @@ String trace({required String tiles}) {
   return path;
 }
 
-void trace2(String tiles) {
+String trace2({required String tiles}) {
   final tilesNumbers = tiles.split('').map((e) => int.parse(e)).toList();
   var path = '';
   final koo = [
@@ -115,12 +115,17 @@ void trace2(String tiles) {
     path += tile.value;
     print('tile $tile (x:$x,y:$y) (xP:$xP,yP:$yP) ');
 
-    int temp = x;
+    int tempX = x;
     x = _moveX(tile.key, xP, x);
-    xP = temp;
+    xP = tempX;
+
+    int tempY = y;
+    y = _moveY(tile.key, yP, y);
+    yP = tempY;
   }
 
   print('Path: $path');
+  return path;
 }
 
 int _moveX(pattern, xP, x) {
@@ -131,4 +136,15 @@ int _moveX(pattern, xP, x) {
   }
 
   return x;
+}
+
+int _moveY(pattern, yP, y) {
+  //????
+  if (pattern == 2) {
+    if (y > yP) {
+      return y + 1;
+    }
+  }
+
+  return y;
 }
